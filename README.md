@@ -1,2 +1,2 @@
 # dinnr
-Tinder for finding dinner
+Tinder for finding dinnr
