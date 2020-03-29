@@ -3,7 +3,8 @@
 /node_modules
 
 # .env file
-**/.env.*
+.env
+.env.*
 
 # Logs
 logs

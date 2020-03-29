@@ -1,15 +1,23 @@
-import {Entity, ObjectID, ObjectIdColumn, Column} from "typeorm";
+import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import { Restaurant } from './restaurant';
+import { GroupOptions } from './group.options';
 
 @Entity()
-export class User {
+export class Group {
 
   @ObjectIdColumn()
   id: ObjectID;
 
   @Column()
-  firstName: string;
+  key: string;
 
   @Column()
-  lastName: string;
+  name: string;
+
+  @Column(type => GroupOptions)
+  options: GroupOptions;
+
+  @Column(type => Restaurant)
+  restaurants: Restaurant[];
 
 }
