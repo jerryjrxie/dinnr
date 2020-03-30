@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { YelpService } from '../yelp/yelp.service';
-import { Restaurant } from './restaurant';
+import { BusinessDoc } from '../business/business.doc';
 
 @Injectable()
 export class GroupsService {
@@ -35,14 +35,14 @@ export class GroupsService {
       options: data.options
     });
     const group = await this.groupRepository.findOne({ key: key });
-    group.restaurants = await this.yelpService.getRestaurantOptions(group.options);
+    group.businesses = await this.yelpService.getRestaurantOptions(group.options);
     await this.groupRepository.save(group);
     return group;
   }
 
-  async getRestaurants(key: string): Promise<Restaurant[]> {
+  async getBusinesses(key: string): Promise<BusinessDoc[]> {
     const group = await this.groupRepository.findOne({ key: key });
-    return group.restaurants;
+    return group.businesses;
   }
 
 }

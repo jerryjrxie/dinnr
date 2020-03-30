@@ -1,6 +1,6 @@
 import { Entity, ObjectID, ObjectIdColumn, Column, Index, Generated } from 'typeorm';
-import { Restaurant } from './restaurant';
-import { GroupOptions } from './group.options';
+import { BusinessDoc } from '../business/business.doc';
+import { YelpOptionsDoc } from '../yelp/yelp.options.doc';
 
 @Entity()
 export class Group {
@@ -15,10 +15,10 @@ export class Group {
   @Column()
   name: string;
 
-  @Column(type => GroupOptions)
-  options: GroupOptions;
+  @Column(type => YelpOptionsDoc)
+  options: YelpOptionsDoc;
 
-  @Column(type => Restaurant)
-  restaurants: Restaurant[];
+  @Column(type => BusinessDoc)
+  businesses: BusinessDoc[];
 
 }

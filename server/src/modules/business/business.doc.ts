@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm';
 
 // TODO: move to restaurant module
 
-export class Restaurant {
+export class BusinessDoc {
 
   @Column()
   id: string;

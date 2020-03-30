@@ -1,7 +1,7 @@
-import { Entity, Column } from 'typeorm';
+import { Column } from 'typeorm';
 
 
-export class GroupOptions {
+export class YelpOptionsDoc {
 
   @Column()
   limit: number;

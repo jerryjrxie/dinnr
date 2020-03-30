@@ -33,7 +33,7 @@ export class GroupsController {
 
   @Get(':key/restaurants')
   getRestaurants(@Param('key') key) {
-    return this.groupsService.getRestaurants(key);
+    return this.groupsService.getBusinesses(key);
   }
 
 }

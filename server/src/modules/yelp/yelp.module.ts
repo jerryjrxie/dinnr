@@ -1,6 +1,6 @@
 import { HttpModule, Module } from '@nestjs/common';
 import { YelpService } from './yelp.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
