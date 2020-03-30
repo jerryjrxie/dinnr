@@ -3,6 +3,7 @@ import { GroupsService } from './groups.service';
 import { GroupDto } from './dto/GroupDto';
 import { GroupOptionsDto } from './dto/GroupOptionsDto';
 import { Group } from './groups.entity';
+import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 
 @Controller('groups')
 export class GroupsController {
@@ -14,13 +15,15 @@ export class GroupsController {
     return new GroupDto(group);
   }
 
-  @Get(':id')
-  async read(@Param() params): Promise<GroupDto> {
-    const group = await this.groupsService.getGroup(params.id);
-    if (!group) {
-      throw new HttpException('Group not found', HttpStatus.NOT_FOUND)
+  @Get(':key')
+  async read(@Param('key') key) {
+    try {
+      return await this.groupsService.getGroup(key); // TODO: catch this in some kind of exception filter
+    } catch(e) {
+      if (e instanceof EntityNotFoundError) {
+        throw new HttpException(`Group with key: ${key} not found`, HttpStatus.NOT_FOUND)
+      }
     }
-    return new GroupDto(group);
   }
 
   @Put(':key')

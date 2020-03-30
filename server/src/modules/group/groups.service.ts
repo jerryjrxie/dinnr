@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Group } from './groups.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { YelpService } from '../yelp/yelp.service';
+import { Restaurant } from './restaurant';
 
 @Injectable()
 export class GroupsService {
   constructor(
     @InjectRepository(Group)
-    private groupRepository: Repository<Group>,
+    private groupRepository: MongoRepository<Group>,
     private yelpService: YelpService
   ) {}
 
@@ -18,29 +19,30 @@ export class GroupsService {
     do {
       key = nanoid(6);
     } while (await this.groupRepository.findOne({ key: key })); // sanity check key uniqueness
-
-    const group = await this.groupRepository.create({ key: key });
+    // TODO: manage uniqueness with mongodb feature somehow
+    const group = await this.groupRepository.create({
+      key: key,
+    });
     return this.groupRepository.save(group);
   }
 
   async getGroup(key: string): Promise<Group> {
-    return this.groupRepository.findOne({ key: key });
+    return this.groupRepository.findOneOrFail({ key: key });
   }
 
-  async updateGroup(key: string, data: any) {
+  async updateGroup(key: string, data: any): Promise<Group> {
     await this.groupRepository.update({ key: key }, {
       options: data.options
     });
-    // TODO: fix this disgusting code lol
-    return this.groupRepository.findOne({ key: key });
+    const group = await this.groupRepository.findOne({ key: key });
+    group.restaurants = await this.yelpService.getRestaurantOptions(group.options);
+    await this.groupRepository.save(group);
+    return group;
   }
 
-  async getRestaurants(key: string) {
+  async getRestaurants(key: string): Promise<Restaurant[]> {
     const group = await this.groupRepository.findOne({ key: key });
-    const options = this.yelpService.getRestaurantOptions({
-      address: '1 Bloor St West'
-    });
-    return options
+    return group.restaurants;
   }
 
 }

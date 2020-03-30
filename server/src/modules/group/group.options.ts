@@ -1,9 +1,15 @@
 import { Entity, Column } from 'typeorm';
 
-@Entity()
+
 export class GroupOptions {
 
   @Column()
-  address: string
+  limit: number;
+
+  @Column()
+  location: string;
+
+  @Column()
+  radius: number;
 
 }

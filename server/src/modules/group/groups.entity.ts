@@ -1,4 +1,4 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import { Entity, ObjectID, ObjectIdColumn, Column, Index, Generated } from 'typeorm';
 import { Restaurant } from './restaurant';
 import { GroupOptions } from './group.options';
 
@@ -8,6 +8,7 @@ export class Group {
   @ObjectIdColumn()
   id: ObjectID;
 
+  @Index({ unique: true })
   @Column()
   key: string;
 

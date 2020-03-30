@@ -7,15 +7,27 @@ export class YelpService {
     private httpService: HttpService
   ) {}
 
-  getRestaurantOptions(options: any) { // TODO: remove any
+  getRestaurantOptions({
+    limit = 10,
+    location = "1 Bloor St West",
+    radius = 10000
+  }): Promise<any> {
+
     const query = `{
-      search(location: "47 Coledale Rd") {
+      search(
+          limit: ${limit},
+          location: "${location}",
+          radius: ${radius}
+        ) {
         business {
-          name
+          id,
+          name,
+          distance
         }
       }
     }`;
 
+    // TODO: cast to array of Restaurants
     return this.httpService
       .request({
         data: {
@@ -25,6 +37,7 @@ export class YelpService {
       .pipe(
         map(response => response.data.data.search.business)
       )
+      .toPromise()
   }
 
 }

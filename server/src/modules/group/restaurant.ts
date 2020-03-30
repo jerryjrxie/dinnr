@@ -1,18 +1,27 @@
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 // TODO: move to restaurant module
+
 export class Restaurant {
+
+  @Column()
+  id: string;
 
   @Column()
   name: string;
 
   @Column()
-  address: string;
+  distance: number;
 
   // @Column()
   // distance: string;
-  constructor(name: string, address: string) {
+  constructor(
+      id,
+      name,
+      distance
+    ) {
+    this.id = id;
     this.name = name;
-    this.address = address;
+    this.distance = distance;
   }
 }
