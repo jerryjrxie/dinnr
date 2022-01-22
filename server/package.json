@@ -30,7 +30,7 @@
     "@nestjs/typeorm": "^7.0.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
-    "nanoid": "^3.0.1",
+    "nanoid": "^3.1.31",
     "pg": "^7.18.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
